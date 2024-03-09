@@ -17,6 +17,12 @@
             players.GetNextPerson();
         // Defect(s) Found: 
 
+        /*
+        The method shows the last added until it runs out of turns.
+        There were not a Queue implementation, it was a list.
+
+        */
+
         Console.WriteLine("---------");
 
         // Test 2
@@ -57,6 +63,7 @@
             // Console.WriteLine(players);
         }
         // Defect(s) Found: 
+        // The code didn't give infinite turns to the players with 0 or less turns. 
 
         Console.WriteLine("---------");
 
