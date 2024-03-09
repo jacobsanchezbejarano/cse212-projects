@@ -1,8 +1,10 @@
-public static class ArraysTester {
+public static class ArraysTester
+{
     /// <summary>
     /// Entry point for the tests
     /// </summary>
-    public static void Run() {
+    public static void Run()
+    {
         // Sample Test Cases (may not be comprehensive)
         Console.WriteLine("\n=========== PROBLEM 1 TESTS ===========");
         double[] multiples = MultiplesOf(7, 5);
@@ -39,9 +41,22 @@ public static class ArraysTester {
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return new double[0]; // replace this return statement with your own
+        /*
+        Set a variable to contain a list of double numbers with the determined length
+        Perform the operation of multiplying the number by n within a for loop
+        Return an array that contains n (lenght) multiples of the number variable.
+        */
+
+        var result = new double[length];
+
+        for (var i = 1; i <= length; i++)
+        {
+            result[i - 1] = number * i;
+        }
+
+        return result;
     }
-    
+
     /// <summary>
     /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
     /// <c>&lt;List&gt;{1, 2, 3, 4, 5, 6, 7, 8, 9}</c> and an amount is 3 then the list returned should be 
@@ -56,6 +71,21 @@ public static class ArraysTester {
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+
+        /*
+        Obtain the range from the last element in the array to the amount required, store it in the variable preserve.
+        Obtain the range from the beggining to the end of the remaining values, store it in the variable move.
+        Move preserve elements to the end of move variable.
+        Put the new list in the respective index of the list 'data'
+        */
+
+        List<int> preserve = data.GetRange(0, data.Count - amount);
+        List<int> move = data.GetRange(data.Count - amount, amount);
+        move.AddRange(preserve);
+        for (var i = 0; i < data.Count; i++)
+        {
+            data[i] = move[i];
+        }
 
     }
 }
