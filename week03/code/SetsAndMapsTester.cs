@@ -297,9 +297,10 @@ public static class SetsAndMapsTester
 
         var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
 
-        // TODO:
-        // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
-        // on those classes so that the call to Deserialize above works properly.
-        // 2. Add code below to print out each place a earthquake has happened today and its magitude.
+        foreach (var data in featureCollection.Features)
+        {
+            var props = data.Properties;
+            Console.WriteLine($"{props.Place} - Mag {props.Mag}");
+        }
     }
 }
