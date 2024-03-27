@@ -299,24 +299,110 @@ public static class RecursionTester
     public static void WildcardBinary(string pattern)
     {
         // TODO Start Problem 4
+
+        var binary = "01";
+
+        string character = "*";
+
+
+        for (int i = 0; i < binary.Length; i++)
+        {
+            int index = pattern.IndexOf(character);
+
+            if (index != -1)
+            {
+                string aux = pattern[..index] + binary[i] + pattern[(index + 1)..];
+                WildcardBinary(aux);
+            }
+            else
+            {
+                Console.WriteLine(pattern);
+                return;
+            }
+        }
+
     }
+
+    public static List<(int, int)> PossibleMovements { get; } = new List<(int, int)>
+    {
+        (-1, 1),
+        (0, 1),
+        (1, 1),
+        (1, 0),
+        (1, -1),
+        (0, -1),
+        (-1, -1),
+        (-1, 0)
+    };
+
+    private static int attempts = 8;
+
+    public static int Attempts
+    {
+        get { return attempts; }
+    }
+
+    public static void IncrementAttempts(int q)
+    {
+        attempts += q;
+    }
+
+    public static void DecrementAttempts()
+    {
+        attempts--;
+    }
+
 
     /// <summary>
     /// Use recursion to Print all paths that start at (0,0) and end at the
     /// 'end' square.
     /// </summary>
+    /// 
     public static void SolveMaze(Maze maze, int x = 0, int y = 0, List<ValueTuple<int, int>>? currPath = null)
     {
+
         // If this is the first time running the function, then we need
-        // to initialize the currPath list.
+        // to initialize the currPath list.        
         if (currPath == null)
+        {
             currPath = new List<ValueTuple<int, int>>();
+        }
 
         // currPath.Add((1,2)); // Use this syntax to add to the current path
 
         // TODO Start Problem 5
         // ADD CODE HERE
 
-        // Console.WriteLine(currPath.AsString()); // Use this to print out your path when you find the solution
+        currPath.Add((x, y));
+
+
+        if (maze.IsEnd(x, y))
+        {
+            Console.WriteLine("<List>{" + string.Join(",", currPath) + "}");
+        }
+        var possibleMovementsCopy = new List<(int, int)>(PossibleMovements);
+
+        foreach (var el in possibleMovementsCopy)
+        {
+            int aux_x = x + el.Item1;
+            int aux_y = y + el.Item2;
+
+            if (maze.IsValidMove(currPath, aux_x, aux_y))
+            {
+                SolveMaze(maze, aux_x, aux_y, currPath);
+
+                if (maze.IsEnd(aux_x, aux_y))
+                {
+                    (var firstElementX, var firstElementY) = PossibleMovements[0];
+                    PossibleMovements.RemoveAt(0);
+                    PossibleMovements.Add((firstElementX, firstElementY));
+                }
+            }
+        }
+
+        return;
+
+
     }
+
 }
